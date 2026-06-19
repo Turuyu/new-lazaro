@@ -819,23 +819,36 @@ a {
 .service-card.highlight {
     background: var(--gradient-emerald);
     border: var(--border-gold-glass);
+    color: #ffffff;
 }
 
 .service-card.highlight .service-icon {
     background: var(--gradient-gold);
-    color: var(--color-bg-dark);
+    color: #070a12;
 }
 
-.service-card.highlight h3, .service-card.highlight p {
-    color: var(--color-text-white);
+.service-card.highlight h3 {
+    color: #ffffff;
 }
 
 .service-card.highlight p {
-    opacity: 0.85;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.service-card.highlight .service-bullets li {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .service-card.highlight .service-bullets li i {
-    color: var(--color-primary-light);
+    color: #dfc093;
+}
+
+.service-card.highlight .card-link {
+    color: #dfc093;
+}
+
+.service-card.highlight .card-link:hover {
+    color: #ffffff;
 }
 
 .service-badge {
