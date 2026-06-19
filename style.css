@@ -26,6 +26,7 @@
     --gradient-gold: linear-gradient(135deg, #dfc093 0%, #c5a059 50%, #967950 100%);
     --gradient-dark: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
     --gradient-emerald: linear-gradient(135deg, #0a3c2c 0%, #166e54 50%, #0d4635 100%);
+    --gradient-hero-overlay: linear-gradient(to top, rgba(248, 250, 252, 0.9) 0%, rgba(248, 250, 252, 0.2) 100%);
     
     /* Layout & Border Radius */
     --radius-sm: 8px;
@@ -39,11 +40,14 @@
     --shadow-gold-glow: 0 0 25px rgba(197, 160, 89, 0.12);
     --shadow-green-glow: 0 0 25px rgba(22, 110, 84, 0.12);
     
-    /* Header & Toggles */
+    /* Header, Toggles, Footer */
     --color-header-bg: rgba(255, 255, 255, 0.9);
     --shadow-header: 0 10px 30px rgba(15, 23, 42, 0.05);
     --color-toggle-hover: rgba(15, 23, 42, 0.05);
     --color-border-btn-secondary: rgba(15, 23, 42, 0.2);
+    --color-footer-bg: #f1f5f9;
+    --color-footer-title: #0a3c2c;
+    --color-footer-text: #475569;
     
     /* Fonts */
     --font-heading: 'Cinzel', serif;
@@ -74,6 +78,7 @@ body.dark-theme {
     --gradient-gold: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 50%, var(--color-gold-dark) 100%);
     --gradient-dark: linear-gradient(180deg, #090e18 0%, #05080f 100%);
     --gradient-emerald: linear-gradient(135deg, #0a271f 0%, #114c3a 50%, #0d382b 100%);
+    --gradient-hero-overlay: linear-gradient(to top, rgba(7, 10, 18, 0.9) 0%, rgba(7, 10, 18, 0.2) 100%);
     
     /* Layout & Border Radius */
     --border-glass: 1px solid rgba(255, 255, 255, 0.08);
@@ -84,11 +89,14 @@ body.dark-theme {
     --shadow-gold-glow: 0 0 25px rgba(197, 168, 128, 0.15);
     --shadow-green-glow: 0 0 25px rgba(29, 168, 131, 0.15);
     
-    /* Header & Toggles */
+    /* Header, Toggles, Footer */
     --color-header-bg: rgba(7, 10, 18, 0.85);
     --shadow-header: 0 10px 30px rgba(0, 0, 0, 0.4);
     --color-toggle-hover: rgba(255, 255, 255, 0.05);
     --color-border-btn-secondary: rgba(255, 255, 255, 0.2);
+    --color-footer-bg: #04060b;
+    --color-footer-title: var(--color-gold-light);
+    --color-footer-text: var(--color-text-muted);
 }
 
 /* ==========================================================================
@@ -262,7 +270,7 @@ a {
 
 .btn-gold {
     background: var(--color-primary);
-    color: var(--color-text-white);
+    color: #ffffff;
     border: 1px solid var(--color-gold);
     box-shadow: var(--shadow-green-glow);
 }
@@ -574,7 +582,7 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(7, 10, 18, 0.9) 0%, rgba(7, 10, 18, 0.2) 100%);
+    background: var(--gradient-hero-overlay);
     z-index: 2;
 }
 
@@ -1269,7 +1277,7 @@ a {
 
 .experience-badge small {
     font-size: 0.75rem;
-    color: var(--color-text-white);
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -1578,9 +1586,10 @@ a {
    ========================================================================== */
 
 .footer {
-    background: #04060b;
+    background: var(--color-footer-bg);
     border-top: var(--border-glass);
     padding: 80px 24px 0 24px;
+    transition: background-color 0.4s ease;
 }
 
 .footer-container {
@@ -1599,7 +1608,7 @@ a {
 }
 
 .brand-desc {
-    color: var(--color-text-muted);
+    color: var(--color-footer-text);
     font-size: 0.9rem;
     line-height: 1.6;
 }
@@ -1608,7 +1617,7 @@ a {
     font-size: 0.95rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--color-gold-light);
+    color: var(--color-footer-title);
     margin-bottom: 24px;
     font-weight: 700;
 }
@@ -1622,7 +1631,7 @@ a {
 
 .footer-links ul a {
     font-size: 0.9rem;
-    color: var(--color-text-muted);
+    color: var(--color-footer-text);
 }
 
 .footer-links ul a:hover {
@@ -1638,7 +1647,7 @@ a {
 
 .footer-contact p {
     font-size: 0.9rem;
-    color: var(--color-text-muted);
+    color: var(--color-footer-text);
     display: flex;
     gap: 12px;
 }
@@ -1663,7 +1672,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--color-text-muted);
+    color: var(--color-footer-text);
     font-size: 0.85rem;
 }
 
