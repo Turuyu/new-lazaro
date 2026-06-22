@@ -5,11 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
        ========================================================================== */
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     
-    // Check local storage or system preference
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // We default to light theme (as requested), but honor system/saved preferences
     if (savedTheme === 'dark' || (savedTheme === null && systemPrefersDark)) {
         document.body.classList.add('dark-theme');
         if (themeToggleBtn) {
@@ -30,10 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Custom premium cursor removed for standard browser experience in B2B corporate mode.
-
     /* ==========================================================================
-       2. MOBILE MENU NAVIGATION
+       1. MOBILE MENU NAVIGATION
        ========================================================================== */
     const mobileToggle = document.getElementById('mobileToggle');
     const navMenu = document.getElementById('navMenu');
@@ -43,12 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const isOpen = navMenu.classList.toggle('open');
             mobileToggle.setAttribute('aria-expanded', isOpen);
             
-            // Toggle hamburger icon animation
             const bars = mobileToggle.querySelectorAll('.bar');
             if (isOpen) {
-                bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
                 bars[1].style.opacity = '0';
-                bars[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+                bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
             } else {
                 bars[0].style.transform = 'none';
                 bars[1].style.opacity = '1';
@@ -56,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Close menu when clicking a link
         const navLinks = navMenu.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -71,21 +65,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================================================
-       3. HEADER SCROLL EFFECT & ACTIVE NAVIGATION LINKS
+       2. HEADER SCROLL EFFECT & ACTIVE NAVIGATION LINKS
        ========================================================================== */
     const header = document.querySelector('.header');
     const sections = document.querySelectorAll('section');
     const menuLinks = document.querySelectorAll('.nav-link');
 
     window.addEventListener('scroll', () => {
-        // Sticky Header translucency
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
 
-        // Highlight active section link in navigation
         let currentSectionId = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop - 160;
@@ -104,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       4. SCROLL REVEAL (INTERSECTION OBSERVER FALLBACK)
+       3. SCROLL REVEAL (INTERSECTION OBSERVER)
        ========================================================================== */
     const reveals = document.querySelectorAll('.reveal');
     
@@ -114,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('revealed');
                     
-                    // Trigger counters if it's the hero section or stats container
                     if (entry.target.classList.contains('hero-content') || entry.target.classList.contains('hero-graphics')) {
                         triggerCounters();
                     }
@@ -122,19 +113,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
         });
 
         reveals.forEach(el => revealObserver.observe(el));
     } else {
-        // Fallback for older browsers
         reveals.forEach(el => el.classList.add('revealed'));
         triggerCounters();
     }
 
     /* ==========================================================================
-       5. COUNTER ANIMATION FOR STATS
+       4. COUNTER ANIMATION FOR STATS
        ========================================================================== */
     let countersActive = false;
     
@@ -144,8 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         counters.forEach(counter => {
             const target = +counter.getAttribute('data-target');
-            const duration = 2000; // ms
-            const stepTime = 30; // ms
+            const duration = 2000;
+            const stepTime = 30;
             const steps = duration / stepTime;
             const increment = target / steps;
             let current = 0;
@@ -153,8 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
-                    counter.textContent = (target >= 1000 ? '+' + (target/1000) + 'k' : '+' + target);
-                    if (target === 15) counter.textContent = '15'; // Exact for states
+                    counter.textContent = (target >= 1000 ? '+' + (target/1000) + 'K' : '+' + target);
                     clearInterval(timer);
                 } else {
                     counter.textContent = '+' + Math.floor(current);
@@ -165,12 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================================================
-       6. INTERACTIVE BONDING WIZARD & CALCULATOR
+       5. INTERACTIVE WIZARD & CALCULATOR
        ========================================================================== */
     const tabBtns = document.querySelectorAll('.tab-btn');
     const panels = document.querySelectorAll('.wizard-panel');
     
-    // Tab switching
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const sector = btn.getAttribute('data-sector');
@@ -187,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Handle card click anchors to pre-select wizard tabs
     window.selectWizardTab = function(sector) {
         const targetBtn = document.querySelector(`.tab-btn[data-sector="${sector}"]`);
         if (targetBtn) {
@@ -196,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Live calculations formatting as MXN currency
     const formatCurrency = (val) => {
         return new Intl.NumberFormat('es-MX', {
             style: 'currency',
@@ -218,8 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        let percentage = 0.1; // Default 10%
-        if (tipoFianzaEPC.value === 'anticipo_cumplimiento') percentage = 0.4; // 30% anticipo + 10% cumplimiento
+        let percentage = 0.1;
+        if (tipoFianzaEPC.value === 'anticipo_cumplimiento') percentage = 0.4;
         if (tipoFianzaEPC.value === 'vicios') percentage = 0.1;
         
         valInfra.textContent = formatCurrency(val * percentage);
@@ -241,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
             valGarantiaSum.textContent = '-';
             return;
         }
-        valGarantiaSum.textContent = formatCurrency(val * 0.10); // Standard 10% compliance
+        valGarantiaSum.textContent = formatCurrency(val * 0.10);
     };
 
     if (inputSum) {
@@ -272,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Wizard CTAs scrolling to contact and filling fields
+    // Wizard CTAs
     const btnQuote = document.getElementById('btnRequestQuote');
     const selectSector = document.getElementById('formSector');
     const inputMessage = document.getElementById('formMensaje');
@@ -281,12 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
         btnQuote.addEventListener('click', () => {
             const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-sector');
             
-            // Set select option in contact form
             if (selectSector) {
                 selectSector.value = activeTab;
             }
             
-            // Generate tailored message based on calculator input
             let customMsg = '';
             if (activeTab === 'infraestructura' && inputInfra.value) {
                 customMsg = `Hola Lázaro. Requiero asesoría para estructurar fianzas de Infraestructura & EPC. El valor total estimado de la obra es de ${formatCurrency(inputInfra.value)} con requerimiento de garantía: ${tipoFianzaEPC.options[tipoFianzaEPC.selectedIndex].text}.`;
@@ -302,13 +286,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 inputMessage.value = customMsg;
             }
 
-            // Scroll to contact form
             document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
         });
     }
 
     /* ==========================================================================
-       7. ONLINE FIANZA VALIDATOR SIMULATOR
+       6. ONLINE FIANZA VALIDATOR SIMULATOR
        ========================================================================== */
     const frmValidator = document.getElementById('frmValidator');
     const valFeedback = document.getElementById('validationFeedback');
@@ -322,32 +305,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const folio = document.getElementById('valFolio').value.trim();
             const rfc = document.getElementById('valRFC').value.trim().toUpperCase();
 
-            // Set state to loading
             valFeedback.className = 'validation-feedback loading';
             valSpinner.style.display = 'block';
             valContent.innerHTML = '';
 
-            // Simulate server query checking CNSF records
             setTimeout(() => {
                 valSpinner.style.display = 'none';
                 
-                // Simple validation check simulation
                 const isRFCValid = /^[A-Z&Ñ]{3,4}\d{6}[A-Z0-9]{3}$/.test(rfc);
                 
                 if (folio.length > 5 && isRFCValid) {
                     valFeedback.className = 'validation-feedback success';
                     valContent.innerHTML = `
-                        <h5><i class="fa-solid fa-circle-check"></i> Documento Verificado</h5>
+                        <h5><i class="fa-solid fa-circle-check"></i> Documento verificado</h5>
                         <p><strong>Folio:</strong> ${folio}</p>
                         <p><strong>Fiado RFC:</strong> ${rfc}</p>
                         <p><strong>Estado:</strong> VIGENTE y REGISTRADA</p>
-                        <p><strong>Emisor Autorizado:</strong> Lázaro Cruz Vázquez - Agente 28945-CNSF</p>
+                        <p><strong>Emisor autorizado:</strong> Lázaro Cruz Vázquez - Agente 28945-CNSF</p>
                         <p style="font-size:0.75rem; margin-top:8px; opacity:0.8;">La póliza cuenta con respaldo financiero real bajo el contrato de reaseguro CNSF vigente.</p>
                     `;
                 } else {
                     valFeedback.className = 'validation-feedback error';
                     valContent.innerHTML = `
-                        <h5><i class="fa-solid fa-triangle-exclamation"></i> Error de Validación</h5>
+                        <h5><i class="fa-solid fa-triangle-exclamation"></i> Error de validación</h5>
                         <p>No se encontró un registro coincidente para los datos ingresados. Verifique el número de folio o el RFC del fiado e intente nuevamente, o comuníquese a nuestras oficinas para asistencia inmediata.</p>
                     `;
                 }
@@ -356,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================================================
-       8. FAQ ACCORDION TRIGGER
+       7. FAQ ACCORDION
        ========================================================================== */
     const accordionTriggers = document.querySelectorAll('.accordion-trigger');
 
@@ -365,13 +345,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = trigger.parentElement;
             const isOpen = item.classList.contains('active');
             
-            // Close all items
             document.querySelectorAll('.accordion-item').forEach(i => {
                 i.classList.remove('active');
                 i.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
             });
             
-            // Toggle current item
             if (!isOpen) {
                 item.classList.add('active');
                 trigger.setAttribute('aria-expanded', 'true');
@@ -380,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       9. CONTACT FORM HANDLING
+       8. CONTACT FORM HANDLING
        ========================================================================== */
     const contactForm = document.getElementById('contactForm');
     const formFeedback = document.getElementById('formFeedback');
@@ -392,24 +370,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const btnSubmit = document.getElementById('btnSubmitContact');
             const originalBtnText = btnSubmit.innerHTML;
             
-            // Button loading state
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = 'Enviando... <i class="fa-solid fa-spinner fa-spin"></i>';
             formFeedback.style.display = 'none';
 
-            // Simulate form submission
             setTimeout(() => {
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = originalBtnText;
                 
-                // Show success message
                 formFeedback.className = 'form-feedback success';
                 formFeedback.innerHTML = `
                     <strong>¡Solicitud enviada con éxito!</strong><br>
                     Nos hemos puesto en contacto con nuestro equipo. Un especialista liderado por Lázaro Cruz se comunicará con usted al teléfono proporcionado en menos de 2 horas hábiles.
                 `;
                 
-                // Reset form
                 contactForm.reset();
             }, 1500);
         });
