@@ -1,11 +1,18 @@
 ---
-// Header component — mirrors index.html lines 29–50 exactly
+import { Image } from 'astro:assets';
+import logoSenties from '../assets/logo-senties.png';
 ---
 
 <header class="header">
   <div class="header-inner">
     <a href="#" class="logo" aria-label="Inicio">
-      <img src="/media/logo-senties.png" alt="Senties Chauvet - Fianzas y Garantías" class="logo-img" />
+      <Image
+        src={logoSenties}
+        alt="Senties Chauvet - Fianzas y Garantías"
+        width={1378}
+        height={303}
+        class="logo-img"
+      />
     </a>
     <nav class="nav">
       <a href="#servicios">Servicios</a>

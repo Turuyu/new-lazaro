@@ -2,24 +2,30 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import MobileMenu from '../components/MobileMenu.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Partners from '../components/Partners.astro';
+import Levels from '../components/Levels.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 ---
 
 <Layout>
   <Header />
   <MobileMenu />
-
-  <!--
-    PR 2: Header, MobileMenu, and interactivity (theme, menu, scroll) are wired.
-    PR 3 (content): Hero, Services, Partners, Levels, Contact, Footer sections.
-    PR 4 (polish): footer, images, llms.txt, final wiring.
-  -->
-
-  <main style="min-height: 100vh; padding-top: 64px; display: flex; align-items: center; justify-content: center;">
-    <p style="color: var(--text-secondary); font-family: var(--font-body);">
-      Senties Chauvet · Fianzas y Garantías — PR 2 ready
-    </p>
+  <main>
+    <Hero />
+    <Services />
+    <Partners />
+    <Levels />
+    <Contact />
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/5215552002200" class="floating-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
   </main>
+  <Footer />
 </Layout>
 
 <script>
