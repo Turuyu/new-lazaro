@@ -1,15 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import MobileMenu from '../components/MobileMenu.astro';
 import '../styles/global.css';
 ---
 
 <Layout>
-  <!-- Smoke-test: PR 1 verifies Astro boots and Layout renders.
-       Header, Hero, Services, Partners, Levels, Contact, Footer
-       are added in PRs 2–4. -->
-  <main style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+  <Header />
+  <MobileMenu />
+
+  <!--
+    PR 2: Header, MobileMenu, and interactivity (theme, menu, scroll) are wired.
+    PR 3 (content): Hero, Services, Partners, Levels, Contact, Footer sections.
+    PR 4 (polish): footer, images, llms.txt, final wiring.
+  -->
+
+  <main style="min-height: 100vh; padding-top: 64px; display: flex; align-items: center; justify-content: center;">
     <p style="color: var(--text-secondary); font-family: var(--font-body);">
-      Senties Chauvet · Fianzas y Garantías — Astro foundation ready
+      Senties Chauvet · Fianzas y Garantías — PR 2 ready
     </p>
   </main>
 </Layout>
+
+<script>
+  import { initTheme } from '../scripts/theme';
+  import { initMobileMenu } from '../scripts/mobileMenu';
+  import { initHeaderScroll } from '../scripts/headerScroll';
+
+  document.addEventListener('astro:page-load', () => {
+    initTheme();
+    initMobileMenu();
+    initHeaderScroll();
+  });
+</script>
