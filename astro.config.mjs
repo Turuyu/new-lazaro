@@ -5,6 +5,9 @@ export default defineConfig({
   site: 'https://turuyu.github.io',
   base: '/new-lazaro',
   output: 'static',
+  build: {
+    assets: 'assets',
+  },
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',
